@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "Digital English Dictionary",
+    "slug": "Digital English Dictionary",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "assetBundlePatterns": ["**/*"]
+  },
+  "name": "dictionary-app"
+}
