@@ -1,18 +1,19 @@
 import React from 'react';
 import { View } from 'react-native';
 import styles from './favorites.styles';
-import { Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, Button } from 'react-native';
+import { addFavorite, loadUserData } from '../../utils/databaseFunctions';
 
 const FavoritesScreen = ({ handlers }) => {
-  const { navigateToScreen } = handlers;
+  const { navigateToScreen, signOut } = handlers;
 
   return (
     <View style={styles.container}>
-      {/* <View>
-        <TouchableOpacity onPress={() => navigateToScreen('Favorites')}>
-          <Text>Favorites</Text>
+      <View>
+        <TouchableOpacity onPress={signOut}>
+          <Text>SignOut</Text>
         </TouchableOpacity>
-      </View> */}
+      </View>
       <View>
         <TouchableOpacity onPress={() => navigateToScreen('History')}>
           <Text>History</Text>
@@ -38,6 +39,8 @@ const FavoritesScreen = ({ handlers }) => {
           <Text> Word Details</Text>
         </TouchableOpacity>
       </View>
+      <Button title="aaaa" onPress={() => addFavorite({})} />
+      <Button title="bbbb" onPress={() => loadUserData()} />
     </View>
   );
 };

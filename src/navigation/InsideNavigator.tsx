@@ -2,12 +2,12 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import FavoritesController from '../containers/Favorites/favorites.controller';
-import HistoryController from '../containers/History/history.controller';
-import HomeController from '../containers/Home/home.controller';
-import LoginController from '../containers/Login/login.controller';
-import SignUpController from '../containers/SignUp/signUp.controller';
-import WordDetailsController from '../containers/WordDetails/wordDetails.controller';
+import FavoritesController from '../screens/Favorites/favorites.controller';
+import HistoryController from '../screens/History/history.controller';
+import HomeController from '../screens/Home/home.controller';
+import LoginController from '../screens/Login/login.controller';
+import SignUpController from '../screens/SignUp/signUp.controller';
+import WordDetailsController from '../screens/WordDetails/wordDetails.controller';
 
 const InsideStack = createNativeStackNavigator();
 
