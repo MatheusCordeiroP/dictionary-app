@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import HomeScreen from './home.screen';
+import WordListScreen from './wordList.screen';
 import { loadWords } from '../../utils/wordsFunctions';
+import { requestWord } from '../../services/dictionaryapi';
 
-const HomeController = ({ route, navigation }) => {
+const WordListController = ({ route, navigation }) => {
   const [wordList, setWordList] = useState<string[]>([
-    'transubstantiationalist',
-    'transubstantiationalist',
-    'transubstantiationalist',
-    'transubstantiationalist',
+    'if',
+    'you',
+    'need',
+    'creativity',
+    'try',
+    'some',
+    'of',
+    'these',
   ]);
-  const [selectedTab, setSelectedTab] = useState('A');
 
-  const handleTabPress = (tab) => {
-    setSelectedTab(tab);
+  const onPressWord = async (word: string) => {
+    const response = await requestWord(word);
+    console.log('R:', response);
   };
 
   const loadMoreWords = () => {
@@ -30,13 +35,10 @@ const HomeController = ({ route, navigation }) => {
 
   const handlers = {
     wordList,
-    setWordList,
-    selectedTab,
-    handleTabPress,
     loadMoreWords,
-    navigateToScreen,
+    onPressWord,
   };
-  return <HomeScreen handlers={handlers} />;
+  return <WordListScreen handlers={handlers} />;
 };
 
-export default HomeController;
+export default WordListController;
