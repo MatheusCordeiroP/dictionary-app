@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { User, onAuthStateChanged } from 'firebase/auth';
 
 import InsideNavigator from './src/navigation/InsideNavigator';
@@ -19,7 +19,13 @@ const App = () => {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        {user ? <InsideNavigator /> : <StackNavigator />}
+        <SafeAreaView
+          style={{
+            flex: 1,
+          }}
+        >
+          {user ? <InsideNavigator /> : <StackNavigator />}
+        </SafeAreaView>
       </NavigationContainer>
     </SafeAreaProvider>
   );
