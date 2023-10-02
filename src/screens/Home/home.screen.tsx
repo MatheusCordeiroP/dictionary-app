@@ -1,44 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styles from './home.styles';
-import { Ionicons } from '@expo/vector-icons';
-import {
-  View,
-  FlatList,
-  Text,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  useColorScheme,
-} from 'react-native';
-import WordComponentController from '../../components/WordComponent/word.controller';
+
+import { View, Text, TouchableOpacity } from 'react-native';
+import WordListController from '../WordList/wordList.controller';
 
 const HomeScreen = ({ handlers }) => {
-  const { wordList, selectedTab, handleTabPress, loadMoreWords } = handlers;
+  const { route, navigation, selectedTab, handleTabPress } = handlers;
 
   return (
     <View style={[styles.container]}>
-      <View style={styles.findWordTab}>
-        <TextInput style={styles.findWordInput} placeholder="aaa" />
-        <TouchableOpacity style={styles.findWordButton}>
-          <Ionicons name={'search-outline'} color={'#444444'} size={24} />
-        </TouchableOpacity>
+      <View style={styles.screenView}>
+        <WordListController route={route} navigation={navigation} />
       </View>
-      <FlatList
-        data={wordList}
-        keyExtractor={(item, index) => index.toString()}
-        numColumns={2}
-        columnWrapperStyle={styles.itemContainer}
-        renderItem={({ item }) => (
-          <WordComponentController
-            text={item}
-            onPress={() => {
-              console.log('ITEM PRESSED::', item);
-            }}
-          />
-        )}
-        onEndReached={loadMoreWords}
-        onEndReachedThreshold={0.1}
-      />
       <View style={styles.tabSelector}>
         <TouchableOpacity
           style={[

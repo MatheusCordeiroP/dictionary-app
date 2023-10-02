@@ -5,6 +5,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fcc',
   },
+  screenView: {
+    flex: 1,
+    backgroundColor: '#cff',
+  },
   tabSelector: {
     flexDirection: 'row',
     justifyContent: 'space-between',
