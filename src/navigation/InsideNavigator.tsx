@@ -13,7 +13,7 @@ const InsideStack = createNativeStackNavigator();
 
 const InsideNavigator = () => {
   return (
-    <InsideStack.Navigator initialRouteName="Login">
+    <InsideStack.Navigator initialRouteName="Home">
       <InsideStack.Screen
         name="Favorites"
         component={FavoritesController}
@@ -27,7 +27,7 @@ const InsideNavigator = () => {
       <InsideStack.Screen
         name="Home"
         component={HomeController}
-        options={{ title: 'Home' }}
+        options={{ title: 'Home', headerShown: false }}
       />
       <InsideStack.Screen
         name="Word Details"
