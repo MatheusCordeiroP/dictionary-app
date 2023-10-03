@@ -2,7 +2,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
-import { getDatabase, set, ref, get, update } from 'firebase/database';
+import { getDatabase, set, ref, get, update, push } from 'firebase/database';
 import { FIREBASE_AUTH, FIREBASE_APP } from './config';
 
 export const setDataToRealTimeDatabase = async (path: string, data: any) => {
@@ -15,6 +15,12 @@ export const updateDataToRealTimeDatabase = async (updates: any) => {
   const db = getDatabase(FIREBASE_APP);
   const reference = ref(db);
   return update(reference, updates);
+};
+
+export const pushDataToRealTimeDatabase = async (path: string, data: any) => {
+  const db = getDatabase(FIREBASE_APP);
+  const reference = ref(db, path);
+  return push(reference, data);
 };
 
 export const loadDataFromRealTimeDatabase = async (path: string) => {

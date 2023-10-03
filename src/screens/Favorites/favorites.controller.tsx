@@ -1,17 +1,40 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import FavoritesScreen from './favorites.screen';
-import { FIREBASE_AUTH } from '../../services/firebase/config';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { requestWord } from '../../services/dictionaryapi';
 
 const FavoritesController = ({ route, navigation }) => {
-  const signOut = () => {
-    FIREBASE_AUTH.signOut();
+  const [loading, setLoading] = useState(true);
+  const [favoriteList, setFavoriteList] = useState([]);
+
+  const loadHistoryList = async () => {
+    const favoritesJSON = await AsyncStorage.getItem('favorites');
+    const favorites = JSON.parse(favoritesJSON);
+
+    if (favorites && favorites.list) {
+      setFavoriteList(favorites.list);
+      setLoading(false);
+    }
   };
 
-  const navigateToScreen = (screen: string) => {
-    navigation.navigate(screen, {});
+  const onPressWord = async (word: string) => {
+    const response = await requestWord(word);
+
+    navigation.navigate('Word Details', {
+      word: response,
+      saveOnHistory: true,
+    });
   };
 
-  const handlers = { navigateToScreen, signOut };
+  useEffect(() => {
+    setLoading(true);
+    loadHistoryList();
+  }, []);
+
+  const handlers = {
+    favoriteList,
+    onPressWord,
+  };
   return <FavoritesScreen handlers={handlers} />;
 };
 

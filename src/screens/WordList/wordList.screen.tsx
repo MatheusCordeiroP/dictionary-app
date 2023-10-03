@@ -5,16 +5,29 @@ import { View, FlatList, TextInput, TouchableOpacity } from 'react-native';
 import WordComponentController from '../../components/WordComponent/word.controller';
 
 const WordListScreen = ({ handlers }) => {
-  const { wordList, loadMoreWords, onPressWord } = handlers;
+  const {
+    findWordText,
+    setFindWordText,
+    wordList,
+    loadMoreWords,
+    onPressWord,
+    findWord,
+  } = handlers;
 
   return (
-    <View style={[styles.container]}>
+    <View style={styles.container}>
       <View style={styles.findWordTab}>
         <TextInput
           style={styles.findWordInput}
           placeholder="Search for a word..."
+          value={findWordText}
+          autoCapitalize="none"
+          onChangeText={(text) => setFindWordText(text)}
         />
-        <TouchableOpacity style={styles.findWordButton}>
+        <TouchableOpacity
+          style={styles.findWordButton}
+          onPress={() => findWord()}
+        >
           <Ionicons name={'search-outline'} color={'#444444'} size={24} />
         </TouchableOpacity>
       </View>

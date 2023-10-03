@@ -1,11 +1,116 @@
 import React from 'react';
-import { View } from 'react-native';
+import {
+  View,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  Linking,
+} from 'react-native';
 import styles from './wordDetails.styles';
+import { Ionicons } from '@expo/vector-icons';
 
 const wordDetailsScreen = ({ handlers }) => {
-  const {} = handlers;
+  const { selectedWord, favorite, changeFavorite } = handlers;
+  const { word, phonetic, phonetics, meanings, license, sourceUrls } =
+    selectedWord;
 
-  return <View style={styles.container} />;
+  const playAudio = (audioUrl) => {
+    if (audioUrl) {
+      Linking.openURL(audioUrl);
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.wordText}>{word}</Text>
+        <TouchableOpacity
+          onPress={() => {
+            changeFavorite(!favorite);
+          }}
+        >
+          {favorite ? (
+            <Ionicons name="star" color={'#f1c40f'} size={36} />
+          ) : (
+            <Ionicons name="star-outline" color={'#f1c40f'} size={36} />
+          )}
+        </TouchableOpacity>
+      </View>
+      {phonetic && <Text style={styles.mainPhoneticText}>{phonetic}</Text>}
+
+      <ScrollView style={styles.scrollView}>
+        {phonetics && (
+          <>
+            <Text style={styles.phoneticsTitle}>Phonetics:</Text>
+            {phonetics.map((item, index) => {
+              return (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => {
+                    console.log(playAudio(item.audio));
+                  }}
+                >
+                  <Text style={styles.phoneticsText}>{item.text}</Text>
+                </TouchableOpacity>
+              );
+            })}
+          </>
+        )}
+        {meanings && (
+          <>
+            <Text style={styles.meaningsTitle}>Meanings:</Text>
+            {meanings.map((item, index) => {
+              return (
+                <View key={index} style={styles.meaningsComponentView}>
+                  <Text style={styles.meaningsComponentTitle}>
+                    {item.partOfSpeech}
+                  </Text>
+                  {item.definitions.map((item, index) => {
+                    return (
+                      <View
+                        key={index.toString()}
+                        style={styles.meaningsSubComponentView}
+                      >
+                        <Text style={styles.meaningsSubComponentText}>
+                          {item.definition}
+                        </Text>
+                        {item.example && (
+                          <Text style={styles.meaningsSubComponentExample}>
+                            {item.example}
+                          </Text>
+                        )}
+                      </View>
+                    );
+                  })}
+                </View>
+              );
+            })}
+          </>
+        )}
+
+        {license && (
+          <Text style={styles.licenseText}>
+            License: {license.name} ({license.url})
+          </Text>
+        )}
+
+        {sourceUrls && (
+          <>
+            <Text style={styles.sourceTitle}>Source:</Text>
+            {sourceUrls.map((sourceUrl, index) => (
+              <TouchableOpacity
+                key={index}
+                onPress={() => Linking.openURL(sourceUrl)}
+                style={styles.sourceTouchableOpacity}
+              >
+                <Text style={styles.sourceText}> {sourceUrl}</Text>
+              </TouchableOpacity>
+            ))}
+          </>
+        )}
+      </ScrollView>
+    </View>
+  );
 };
 
 export default wordDetailsScreen;

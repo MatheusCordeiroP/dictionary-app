@@ -3,11 +3,9 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fcc',
   },
   screenView: {
     flex: 1,
-    backgroundColor: '#cff',
   },
   tabSelector: {
     flexDirection: 'row',
@@ -28,32 +26,6 @@ const styles = StyleSheet.create({
   },
   selectedTab: {
     backgroundColor: '#aaa',
-  },
-  findWordTab: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 10,
-    backgroundColor: '#ffc',
-  },
-  findWordInput: {
-    flex: 1,
-    marginRight: 10,
-    padding: 10,
-    backgroundColor: '#ccf',
-    borderRadius: 5,
-  },
-  findWordButton: {
-    backgroundColor: '#cff',
-    padding: 10,
-    borderRadius: 5,
-  },
-  itemContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '90%',
-    marginHorizontal: '5%',
-    backgroundColor: '#cfc',
   },
   itemText: {
     fontSize: 16,

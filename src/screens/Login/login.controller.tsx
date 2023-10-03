@@ -1,39 +1,36 @@
 import React, { useState } from 'react';
 import LoginScreen from './login.screen';
-import { databaseSignIn, databaseSignUp } from '../../utils/databaseFunctions';
+import { databaseSignIn } from '../../utils/databaseFunctions';
+import { showMessage } from 'react-native-flash-message';
 
 const LoginController = ({ route, navigation }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('guest@dev.com');
+  const [password, setPassword] = useState('123456');
   const [loading, setLoading] = useState(false);
 
   const signIn = async () => {
     setLoading(true);
     try {
-      const response = await databaseSignIn(email, password);
+      await databaseSignIn(email, password);
     } catch (error: any) {
-      console.log(error);
-      alert('Sign In failed: ' + error?.message);
+      showMessage({
+        message: 'Sign In Failed',
+        description: `${error?.message}`,
+        type: 'danger',
+        duration: 3000,
+      });
     } finally {
       setLoading(false);
     }
   };
 
   const signUp = async () => {
-    setLoading(false);
-    try {
-      const response = await databaseSignUp(email, password);
-      alert('Check your emails!');
-    } catch (error: any) {
-      console.log(error);
-      alert('Registration failed: ' + error?.message);
-    } finally {
-      setLoading(false);
-    }
+    navigation.navigate('Sign Up', {});
   };
 
-  const navigateToScreen = (screen: string) => {
-    navigation.navigate(screen, {});
+  const clearFields = async () => {
+    setEmail('');
+    setPassword('');
   };
 
   const handlers = {
@@ -42,10 +39,9 @@ const LoginController = ({ route, navigation }) => {
     password,
     setPassword,
     loading,
-    setLoading,
     signIn,
     signUp,
-    navigateToScreen,
+    clearFields,
   };
   return <LoginScreen handlers={handlers} />;
 };

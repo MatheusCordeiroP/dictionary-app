@@ -6,6 +6,7 @@ import { User, onAuthStateChanged } from 'firebase/auth';
 import InsideNavigator from './src/navigation/InsideNavigator';
 import StackNavigator from './src/navigation/StackNavigator';
 import { FIREBASE_AUTH } from './src/services/firebase/config';
+import FlashMessage from 'react-native-flash-message';
 
 const App = () => {
   const [user, setUser] = useState<User | 'guest' | null>(null);
@@ -26,6 +27,7 @@ const App = () => {
         >
           {user ? <InsideNavigator /> : <StackNavigator />}
         </SafeAreaView>
+        <FlashMessage position="top" style={{ paddingTop: 38 }} />
       </NavigationContainer>
     </SafeAreaProvider>
   );

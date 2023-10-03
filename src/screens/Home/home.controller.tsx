@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import HomeScreen from './home.screen';
 
 const HomeController = ({ route, navigation }) => {
-  const [selectedTab, setSelectedTab] = useState('A');
+  const [selectedTab, setSelectedTab] = useState('Discover');
 
   const handleTabPress = (tab) => {
     setSelectedTab(tab);

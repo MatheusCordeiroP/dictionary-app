@@ -1,9 +1,13 @@
 import React from 'react';
-import { View } from 'react-native';
+import {
+  TouchableOpacity,
+  View,
+  TextInput,
+  ActivityIndicator,
+  Text,
+  KeyboardAvoidingView,
+} from 'react-native';
 import styles from './login.styles';
-import { TextInput, Button } from 'react-native';
-import { ActivityIndicator, Text } from 'react-native';
-import { KeyboardAvoidingView } from 'react-native';
 
 const LoginScreen = ({ handlers }) => {
   const {
@@ -12,16 +16,16 @@ const LoginScreen = ({ handlers }) => {
     password,
     setPassword,
     loading,
-    setLoading,
     signIn,
     signUp,
+    clearFields,
   } = handlers;
 
   return (
     <View style={styles.container}>
       <KeyboardAvoidingView behavior="padding">
         <Text style={styles.title}>Digital English Dictionary</Text>
-        <Text style={styles.subtitle}>Digital English Dictionary</Text>
+        <Text style={styles.subtitle}>Unlocking the World of Words!</Text>
         <TextInput
           style={styles.textInput}
           value={email}
@@ -37,12 +41,25 @@ const LoginScreen = ({ handlers }) => {
           autoCapitalize="none"
           onChangeText={(text) => setPassword(text)}
         ></TextInput>
+        <View style={styles.clearFieldsContainer}>
+          <TouchableOpacity onPress={() => clearFields()}>
+            <Text style={styles.clearFieldsText}>Clear Fields</Text>
+          </TouchableOpacity>
+        </View>
         {loading ? (
-          <ActivityIndicator size="large" color="#0000ff" />
+          <ActivityIndicator size="large" color="#444" />
         ) : (
-          <View style={styles.textInput}>
-            <Button title="Login" onPress={signIn} />
-            <Button title="Create  Account" onPress={signUp} />
+          <View style={styles.buttonContainer}>
+            <View style={styles.buttonStyle}>
+              <TouchableOpacity onPress={signIn}>
+                <Text style={styles.buttonText}>Login</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.buttonStyle}>
+              <TouchableOpacity onPress={signUp}>
+                <Text style={styles.buttonText}>Create Account</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         )}
       </KeyboardAvoidingView>

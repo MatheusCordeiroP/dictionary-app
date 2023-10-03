@@ -1,12 +1,41 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import HistoryScreen from './history.screen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { requestWord } from '../../services/dictionaryapi';
 
 const HistoryController = ({ route, navigation }) => {
-  const navigateToScreen = (screen: string) => {
-    navigation.navigate(screen, {});
+  const [loading, setLoading] = useState(true);
+  const [historyList, setHistoryList] = useState([]);
+
+  const loadHistoryList = async () => {
+    const historyJSON = await AsyncStorage.getItem('history');
+    const history = JSON.parse(historyJSON);
+
+    if (history && history.list) {
+      const historyArray = history.list;
+      historyArray.sort((a: any, b: any) => b.order - a.order);
+
+      setHistoryList(history.list);
+      setLoading(false);
+      return;
+    }
   };
 
-  const handlers = { navigateToScreen };
+  const onPressWord = async (word: string) => {
+    const response = await requestWord(word);
+
+    navigation.navigate('Word Details', {
+      word: response,
+      saveOnHistory: false,
+    });
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    loadHistoryList();
+  }, []);
+
+  const handlers = { onPressWord, historyList };
   return <HistoryScreen handlers={handlers} />;
 };
 
