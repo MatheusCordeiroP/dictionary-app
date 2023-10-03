@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import WordDetailsScreen from './wordDetails.screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Speech from 'expo-speech';
 import {
   addFavorite,
   addHistory,
@@ -109,7 +110,11 @@ const WordDetailsController = ({ route, navigation }) => {
     return;
   };
 
-  const handlers = { selectedWord, favorite, changeFavorite };
+  const speechText = (text) => {
+    Speech.speak(text, { language: 'en' });
+  };
+
+  const handlers = { selectedWord, favorite, changeFavorite, speechText };
   return <WordDetailsScreen handlers={handlers} />;
 };
 

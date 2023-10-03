@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
   },
   phoneticsText: {
     fontSize: 16,
-    color: 'blue',
   },
   meaningsTitle: {
     fontSize: 20,
@@ -56,19 +55,19 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
   licenseText: {
-    fontSize: 16,
-    marginTop: 16,
+    fontSize: 14,
+    marginTop: 24,
   },
   sourceTitle: {
-    fontSize: 20,
-    marginTop: 16,
+    fontSize: 14,
+    marginTop: 12,
   },
   sourceTouchableOpacity: {
     marginBottom: 8,
   },
   sourceText: {
-    fontSize: 16,
-    color: 'blue',
+    fontSize: 14,
+    color: '#448',
   },
 });
 

@@ -10,20 +10,21 @@ import styles from './wordDetails.styles';
 import { Ionicons } from '@expo/vector-icons';
 
 const wordDetailsScreen = ({ handlers }) => {
-  const { selectedWord, favorite, changeFavorite } = handlers;
+  const { selectedWord, favorite, changeFavorite, speechText } = handlers;
   const { word, phonetic, phonetics, meanings, license, sourceUrls } =
     selectedWord;
-
-  const playAudio = (audioUrl) => {
-    if (audioUrl) {
-      Linking.openURL(audioUrl);
-    }
-  };
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.wordText}>{word}</Text>
+        <TouchableOpacity
+          onPress={() => {
+            speechText(word);
+          }}
+        >
+          <Ionicons name="volume-medium-outline" color={'#888'} size={28} />
+        </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
             changeFavorite(!favorite);
@@ -39,24 +40,15 @@ const wordDetailsScreen = ({ handlers }) => {
       {phonetic && <Text style={styles.mainPhoneticText}>{phonetic}</Text>}
 
       <ScrollView style={styles.scrollView}>
-        {phonetics && (
+        {phonetics && phonetics.length > 0 && (
           <>
             <Text style={styles.phoneticsTitle}>Phonetics:</Text>
             {phonetics.map((item, index) => {
-              return (
-                <TouchableOpacity
-                  key={index}
-                  onPress={() => {
-                    console.log(playAudio(item.audio));
-                  }}
-                >
-                  <Text style={styles.phoneticsText}>{item.text}</Text>
-                </TouchableOpacity>
-              );
+              return <Text style={styles.phoneticsText}>{item.text}</Text>;
             })}
           </>
         )}
-        {meanings && (
+        {meanings && meanings.length > 0 && (
           <>
             <Text style={styles.meaningsTitle}>Meanings:</Text>
             {meanings.map((item, index) => {
