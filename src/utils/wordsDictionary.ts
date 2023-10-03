@@ -1,4 +1,4 @@
-export const wordArray = `extra-word-to-be-removed
+export const wordArray: string = `extra-word-to-be-removed
 a
 a3
 a4

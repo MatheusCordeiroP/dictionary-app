@@ -1,2 +1,2 @@
 node_modules/
-src/utils/wordsDictionary.js
+src/utils/wordsDictionary.ts
