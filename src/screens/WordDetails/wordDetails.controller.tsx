@@ -5,6 +5,7 @@ import * as Speech from 'expo-speech';
 import {
   addFavorite,
   addHistory,
+  getUserId,
   removeFavorite,
 } from '../../utils/databaseFunctions';
 import { setLastUpdateAsyncStorage } from '../../utils/asyncStorageFunctions';
@@ -23,7 +24,8 @@ const WordDetailsController = ({ route, navigation }) => {
   }, []);
 
   const updateHistory = async () => {
-    const historyJSON = await AsyncStorage.getItem('history');
+    const userId = getUserId();
+    const historyJSON = await AsyncStorage.getItem(`history-${userId}`);
 
     let historyList = [];
     if (historyJSON !== null) {
@@ -41,12 +43,13 @@ const WordDetailsController = ({ route, navigation }) => {
       order: historyList.length,
       name: selectedWord.word,
     });
-    AsyncStorage.setItem('history', stringifiedHistory);
+    AsyncStorage.setItem(`history-${userId}`, stringifiedHistory);
     setLastUpdateAsyncStorage();
   };
 
   const updateFavorite = async () => {
-    const favoriteJSON = await AsyncStorage.getItem('favorites');
+    const userId = getUserId();
+    const favoriteJSON = await AsyncStorage.getItem(`favorites-${userId}`);
     let favoriteList = [];
     if (favoriteJSON !== null) {
       const favorite = JSON.parse(favoriteJSON);
@@ -65,7 +68,8 @@ const WordDetailsController = ({ route, navigation }) => {
   };
 
   const changeFavorite = async (newState: boolean) => {
-    const favoriteJSON = await AsyncStorage.getItem('favorites');
+    const userId = getUserId();
+    const favoriteJSON = await AsyncStorage.getItem(`favorites-${userId}`);
     let favoriteList = [];
     if (favoriteJSON !== null) {
       const favorite = JSON.parse(favoriteJSON);
@@ -88,7 +92,8 @@ const WordDetailsController = ({ route, navigation }) => {
       }
 
       const stringifiedFavorites = JSON.stringify({ list: favoriteList });
-      AsyncStorage.setItem('favorites', stringifiedFavorites);
+      const userId = getUserId();
+      AsyncStorage.setItem(`favorites-${userId}`, stringifiedFavorites);
       setLastUpdateAsyncStorage();
       addFavorite({ name: selectedWord.word });
       setFavorite(true);
@@ -103,7 +108,7 @@ const WordDetailsController = ({ route, navigation }) => {
     }
 
     const stringifiedFavorites = JSON.stringify({ list: favoriteList });
-    AsyncStorage.setItem('favorites', stringifiedFavorites);
+    AsyncStorage.setItem(`favorites-${userId}`, stringifiedFavorites);
     setLastUpdateAsyncStorage();
     removeFavorite(selectedWord.word);
     setFavorite(false);

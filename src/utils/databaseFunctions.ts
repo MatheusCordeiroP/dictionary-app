@@ -111,7 +111,11 @@ export const loadAndSetUserData = async () => {
   if (userData && userData.last_changes && userData.last_changes.date) {
     firebaseLastChanges = userData.last_changes.date;
   }
-  const stringLastChanges = await AsyncStorage.getItem('last_changes');
+  const userId = getUserId();
+
+  const stringLastChanges = await AsyncStorage.getItem(
+    `last_changes-${userId}`
+  );
   if (stringLastChanges !== null) {
     asyncStorageLastChanges = Number.parseInt(stringLastChanges);
   }
@@ -136,15 +140,18 @@ export const loadAndSetUserData = async () => {
     historyArray.sort((a: any, b: any) => a.order - b.order);
 
     const stringifiedFavorites = JSON.stringify({ list: favoriteArray });
-    AsyncStorage.setItem('favorites', stringifiedFavorites);
+    const userId = getUserId();
+    AsyncStorage.setItem(`favorites-${userId}`, stringifiedFavorites);
 
     const stringifiedHistory = JSON.stringify({ list: historyArray });
-    AsyncStorage.setItem('history', stringifiedHistory);
+    AsyncStorage.setItem(`history-${userId}`, stringifiedHistory);
     setLastUpdateAsyncStorage();
   } else {
     //asyncstorage was updated later
-    const stringFavorites = await AsyncStorage.getItem('favorites');
-    const stringHistory = await AsyncStorage.getItem('history');
+    const userId = getUserId();
+
+    const stringFavorites = await AsyncStorage.getItem(`favorites-${userId}`);
+    const stringHistory = await AsyncStorage.getItem(`history-${userId}`);
     const favorites = JSON.parse(stringFavorites);
     const history = JSON.parse(stringHistory);
 
@@ -155,7 +162,6 @@ export const loadAndSetUserData = async () => {
       addFavorite({ name: item.word });
     }
 
-    const userId = FIREBASE_AUTH.currentUser?.uid;
     const path = `users/${userId}/history/`;
     await setDataToRealTimeDatabase(path, {});
     await setLastUpdate();
@@ -167,4 +173,8 @@ export const loadAndSetUserData = async () => {
       });
     }
   }
+};
+
+export const getUserId = () => {
+  return FIREBASE_AUTH.currentUser?.uid;
 };

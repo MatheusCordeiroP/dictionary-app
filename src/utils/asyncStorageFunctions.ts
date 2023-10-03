@@ -1,5 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getUserId } from './databaseFunctions';
 
 export const setLastUpdateAsyncStorage = () => {
-  AsyncStorage.setItem('last_changes', Date.now.toString());
+  const userId = getUserId();
+  AsyncStorage.setItem(`last_changes-${userId}`, Date.now.toString());
 };
