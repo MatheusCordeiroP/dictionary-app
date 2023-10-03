@@ -50,7 +50,22 @@ Install project dependencies using Yarn or npm.
 npm install
 ```
 
-Once the dependencies are properly installed, run the project with the following command:
+At file `src/services/firebase/config`, replace the following code with your firebase configs.
+
+```js
+const firebaseConfig = {
+  apiKey: '',
+  authDomain: '',
+  databaseURL: '',
+  projectId: '',
+  storageBucket: '',
+  messagingSenderId: '',
+  appId: '',
+  measurementId: '',
+};
+```
+
+Once the dependencies are properly installed, and firebaseConfig was added, run the project with the following command:
 
 ```bash
 npx expo start
