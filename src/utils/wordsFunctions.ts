@@ -1,5 +1,7 @@
 import { wordArray } from './wordsDictionary';
 
+const wordArrayLength = wordArray.length;
+
 export const loadWords = (quantity: number) => {
   let selectedWords = [];
 
@@ -11,7 +13,7 @@ export const loadWords = (quantity: number) => {
 };
 
 const getRandomWord = () => {
-  const randomIndex = Math.floor(Math.random() * wordArray.length - 200);
+  const randomIndex = Math.floor(Math.random() * wordArrayLength - 200);
   const randomPart = wordArray.substring(randomIndex, randomIndex + 200);
   const elementsArray = randomPart.split('\n');
   elementsArray.shift(); // Remove the first element
