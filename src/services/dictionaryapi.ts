@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import { setLastUpdateAsyncStorage } from '../utils/asyncStorageFunctions';
+import { setLastUpdateAsyncStorage } from '../utils/databaseFunctions';
 
 export const requestWord = async (word: string) => {
   const wordInCache = await AsyncStorage.getItem(`word-${word}`);

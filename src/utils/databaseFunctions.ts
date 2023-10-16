@@ -7,7 +7,6 @@ import {
   signInFirebase,
   signUpFirebase,
 } from '../services/firebase/functions';
-import { setLastUpdateAsyncStorage } from './asyncStorageFunctions';
 
 export const databaseSignIn = async (email: string, password: string) => {
   const user = await signInFirebase(email, password);
@@ -177,4 +176,9 @@ export const loadAndSetUserData = async () => {
 
 export const getUserId = () => {
   return FIREBASE_AUTH.currentUser?.uid;
+};
+
+export const setLastUpdateAsyncStorage = () => {
+  const userId = getUserId();
+  AsyncStorage.setItem(`last_changes-${userId}`, Date.now.toString());
 };

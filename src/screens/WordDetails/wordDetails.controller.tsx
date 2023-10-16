@@ -7,8 +7,8 @@ import {
   addHistory,
   getUserId,
   removeFavorite,
+  setLastUpdateAsyncStorage,
 } from '../../utils/databaseFunctions';
-import { setLastUpdateAsyncStorage } from '../../utils/asyncStorageFunctions';
 
 const WordDetailsController = ({ route, navigation }) => {
   const [favorite, setFavorite] = useState(false);
@@ -60,8 +60,7 @@ const WordDetailsController = ({ route, navigation }) => {
     }
 
     for (let favoriteWord of favoriteList) {
-      console.log(favoriteWord);
-      if (favoriteWord == selectedWord.word) {
+      if (favoriteWord.word == selectedWord.word) {
         setFavorite(true);
       }
     }
@@ -81,7 +80,7 @@ const WordDetailsController = ({ route, navigation }) => {
 
     let isFavorite = false;
     for (let favoriteWord of favoriteList) {
-      if (favoriteWord == selectedWord.word) {
+      if (favoriteWord.word == selectedWord.word) {
         isFavorite = true;
       }
     }
@@ -102,7 +101,7 @@ const WordDetailsController = ({ route, navigation }) => {
 
     if (isFavorite) {
       const updatedFavoriteList = favoriteList.filter(
-        (word) => word !== selectedWord.word
+        (word) => word.word !== selectedWord.word
       );
       favoriteList = updatedFavoriteList;
     }

@@ -7,8 +7,6 @@ import HistoryWordComponentController from '../../components/HistoryWordComponen
 const FavoritesScreen = ({ handlers }) => {
   const { favoriteList, onPressWord } = handlers;
 
-  console.log(favoriteList);
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Favorites</Text>
