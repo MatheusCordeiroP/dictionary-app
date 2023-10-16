@@ -23,7 +23,7 @@ export const loadUserData = () => {
   if (!FIREBASE_AUTH?.currentUser?.uid) {
     return;
   }
-  const userId = FIREBASE_AUTH.currentUser?.uid;
+  const userId = getUserId();
   return loadDataFromRealTimeDatabase(`users/${userId}`);
 };
 
@@ -35,7 +35,7 @@ export const addFavorite = (data: any) => {
     return;
   }
 
-  const userId = FIREBASE_AUTH.currentUser?.uid;
+  const userId = getUserId();
   const objName = data?.name;
 
   const path = `users/${userId}/favorites/${objName}`;
@@ -51,7 +51,7 @@ export const removeFavorite = (favorite: string) => {
     return;
   }
 
-  const userId = FIREBASE_AUTH.currentUser?.uid;
+  const userId = getUserId();
   const objName = favorite;
 
   const path = `users/${userId}/favorites/${objName}`;
@@ -67,7 +67,7 @@ export const addHistory = (data: any) => {
     return;
   }
 
-  const userId = FIREBASE_AUTH.currentUser?.uid;
+  const userId = getUserId();
 
   const path = `users/${userId}/history/`;
   pushDataToRealTimeDatabase(path, data);
@@ -82,7 +82,7 @@ export const removeHistory = (history: string) => {
     return;
   }
 
-  const userId = FIREBASE_AUTH.currentUser?.uid;
+  const userId = getUserId();
   const objName = history;
 
   const path = `users/${userId}/history/${objName}`;
@@ -94,7 +94,7 @@ export const setLastUpdate = () => {
   if (!FIREBASE_AUTH?.currentUser?.uid) {
     return;
   }
-  const userId = FIREBASE_AUTH.currentUser?.uid;
+  const userId = getUserId();
 
   const path = `users/${userId}/last_changes`;
   setDataToRealTimeDatabase(path, { date: Date.now() });
